@@ -27,7 +27,7 @@ app.use('/api', sessionRoutes)
 app.use('/api', spotifyRoutes)
 
 app.get('/health', (req, res) => {
-  res.json({ status: 'ok', version: 1 })
+  res.json({ status: 'ok', version: 1.1 })
 })
 
 export default app
