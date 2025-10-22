@@ -1,3 +1,5 @@
+import dotenv from 'dotenv'
+dotenv.config()
 import express from 'express'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
@@ -7,6 +9,8 @@ import sessionRoutes from './routes/session.js'
 import logger from './utils/logger.js'
 import mongoose from 'mongoose'
 
+
+mongoose.connect(process.env.MONGO_URI)
 const app = express()
 
 app.use(cors())
@@ -23,7 +27,7 @@ app.use('/api', sessionRoutes)
 app.use('/api', spotifyRoutes)
 
 app.get('/health', (req, res) => {
-  res.json({ status: 'ok', version: 1.11, readyState: mongoose.connection.readyState })
+  res.json({ status: 'ok', version: 1.12, readyState: mongoose.connection.readyState })
 })
 
 export default app
