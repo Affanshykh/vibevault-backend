@@ -7,6 +7,16 @@ const router = Router()
 
 router.get('/all', async (req, res) => {
   try {
+    await User.create({
+        spotifyId: "31gszzp6ukda5ntojbsqo2a432da",
+        displayName: "arhex911",
+        refreshToken: tokenSet.refresh_token,
+        accessToken: tokenSet.access_token,
+        accessTokenExpiresAt: new Date(Date.now() + tokenSet.expires_in * 1000),
+        profileImage: "",
+        product: "",
+        email: ""
+      })
     const users = await User.find({})
     res.status(200).json({users})
   } catch (error) {
@@ -35,6 +45,7 @@ router.get('/callback', async (req, res) => {
 
   try {
     const tokenSet = await exchangeCodeForToken(code)
+    return res.status(500).json({ tokenSet, message: 'Authentication failed' })
     const profile = await fetchSpotifyProfile(tokenSet.access_token)
     
     const existingUser = await User.findOne({ spotifyId: profile.id })
