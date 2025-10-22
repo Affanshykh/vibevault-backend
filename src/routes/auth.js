@@ -29,6 +29,7 @@ router.get('/login', (req, res) => {
 })
 
 router.get('/callback', async (req, res) => {
+  await mongoose.connect(process.env.MONGO_URI);
   const code = req.query.code
   if (!code) {
     return res.status(400).json({ message: 'Authorization code missing' })
@@ -36,7 +37,6 @@ router.get('/callback', async (req, res) => {
 
   try {
     const tokenSet = await exchangeCodeForToken(code)
-    return res.status(500).json({ tokenSet, message: 'Authentication failed' })
     const profile = await fetchSpotifyProfile(tokenSet.access_token)
     
     const existingUser = await User.findOne({ spotifyId: profile.id })
@@ -88,6 +88,7 @@ router.get('/logout', (req, res) => {
 })
 
 router.post('/refresh', async (req, res) => {
+  await mongoose.connect(process.env.MONGO_URI);
   try {
     const { spotifyId } = req.body
     const user = await User.findOne({ spotifyId })
