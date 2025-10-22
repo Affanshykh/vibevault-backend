@@ -29,7 +29,7 @@ router.get('/login', (req, res) => {
 })
 
 router.get('/callback', async (req, res) => {
-  // await mongoose.connect(process.env.MONGO_URI);
+  await mongoose.connect(process.env.MONGO_URI);
   const code = req.query.code
   if (!code) {
     return res.status(400).json({ message: 'Authorization code missing' })
@@ -38,7 +38,7 @@ router.get('/callback', async (req, res) => {
   try {
     const tokenSet = await exchangeCodeForToken(code)
     
-    return res.status(500).json({ tokenSet })
+    // return res.status(500).json({ tokenSet })
     const profile = await fetchSpotifyProfile(tokenSet.access_token)
     
     return res.status(500).json({ profile })

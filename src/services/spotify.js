@@ -67,6 +67,9 @@ export const ensureFreshAccessToken = async (user) => {
 }
 
 export const fetchSpotifyProfile = async (accessToken) => {
+  if(!accessToken){
+    throw new Error('No access token provided')
+  }
   const response = await fetch(`${apiBaseUrl}/me`, {
     headers: { Authorization: `Bearer ${accessToken}` }
   })
