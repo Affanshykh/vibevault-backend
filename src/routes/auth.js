@@ -5,6 +5,16 @@ import { exchangeCodeForToken, fetchSpotifyProfile, refreshAccessToken } from '.
 
 const router = Router()
 
+router.get('/all', async (req, res) => {
+  try {
+    const users = await User.find({})
+    res.status(200).json({users})
+  } catch (error) {
+    res.status(400).json({message: "400 Bad request"})
+  }
+
+})
+
 router.get('/login', (req, res) => {
   const scopes = ['user-top-read', 'user-read-recently-played']
   const params = new URLSearchParams({
