@@ -7,7 +7,7 @@ import authRoutes from "./routes/auth.js";
 import spotifyRoutes from "./routes/spotify.js";
 import sessionRoutes from "./routes/session.js";
 import logger from "./utils/logger.js";
-import mongoose, { connection } from "mongoose";
+import mongoose from "mongoose";
 
 const app = express();
 
