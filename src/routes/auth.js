@@ -40,6 +40,7 @@ router.get('/callback', async (req, res) => {
     const profile = await fetchSpotifyProfile(tokenSet.access_token)
     
     const existingUser = await User.findOne({ spotifyId: profile.id })
+    return res.status(500).json({ existingUser })
     if (existingUser) {
       existingUser.refreshToken = tokenSet.refresh_token || existingUser.refreshToken
       existingUser.accessToken = tokenSet.access_token
