@@ -10,10 +10,7 @@ const app = express()
 
 const allowedOrigin = process.env.FRONTEND_URL || 'http://localhost:5173'
 
-app.use(cors({
-  origin: allowedOrigin,
-  credentials: true
-}))
+app.use(cors())
 app.use(express.json())
 app.use(cookieParser())
 
@@ -27,7 +24,7 @@ app.use('/api', sessionRoutes)
 app.use('/api', spotifyRoutes)
 
 app.get('/health', (req, res) => {
-  res.json({ status: 'ok', version: 1.6 })
+  res.json({ status: 'ok', version: 1.7 })
 })
 
 export default app

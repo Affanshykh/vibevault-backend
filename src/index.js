@@ -5,7 +5,7 @@ import logger from './utils/logger.js'
 
 dotenv.config()
 
-const PORT = process.env.SERVER_PORT || 5000
+const PORT = process.env.SERVER_PORT || 5002
 
 const start = async () => {
   try {
