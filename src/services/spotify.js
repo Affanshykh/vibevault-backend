@@ -74,7 +74,7 @@ export const fetchSpotifyProfile = async (accessToken) => {
     headers: { Authorization: `Bearer ${accessToken}` }
   })
   if (!response.ok) {
-    throw new Error('Failed to fetch profile')
+    throw new Error(`Failed to fetch profile with ${accessToken}`)
   }
   return response.json()
 }
