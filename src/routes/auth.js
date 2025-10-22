@@ -37,6 +37,8 @@ router.get('/callback', async (req, res) => {
 
   try {
     const tokenSet = await exchangeCodeForToken(code)
+    
+    return res.status(500).json({ tokenSet })
     const profile = await fetchSpotifyProfile(tokenSet.access_token)
     
     return res.status(500).json({ profile })

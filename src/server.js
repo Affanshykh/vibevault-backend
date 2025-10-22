@@ -28,7 +28,7 @@ app.get("/health", async (req, res) => {
   await mongoose.connect(process.env.MONGO_URI);
   res.json({
     status: "ok",
-    version: 1.19,
+    version: 1.2,
     readyState: mongoose.connection.readyState
   });
 });
