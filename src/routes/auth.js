@@ -79,7 +79,7 @@ router.get('/callback', async (req, res) => {
     const redirectUrl = `${process.env.FRONTEND_URL || 'https://vibevault-delta.vercel.app'}/dashboard`
     res.redirect(redirectUrl)
   } catch (error) {
-    res.status(500).json({ message: 'Authentication failed' })
+    res.status(500).json({ message: 'Authentication failed', error: error.message || error })
   }
 })
 
