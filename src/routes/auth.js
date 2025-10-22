@@ -2,10 +2,12 @@ import { Router } from 'express'
 import jwt from 'jsonwebtoken'
 import User from '../models/User.js'
 import { exchangeCodeForToken, fetchSpotifyProfile, refreshAccessToken } from '../services/spotify.js'
+import mongoose from 'mongoose'
 
 const router = Router()
 
 router.get('/all', async (req, res) => {
+  await mongoose.connect(process.env.MONGO_URI);
   try {
     const users = await User.find({})
     res.status(200).json({users})
