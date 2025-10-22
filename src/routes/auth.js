@@ -28,7 +28,6 @@ router.get('/callback', async (req, res) => {
     const profile = await fetchSpotifyProfile(tokenSet.access_token)
     
     const existingUser = await User.findOne({ spotifyId: profile.id })
-    return res.status(500).json({ existingUser, message: 'Authentication failed' })
     if (existingUser) {
       existingUser.refreshToken = tokenSet.refresh_token || existingUser.refreshToken
       existingUser.accessToken = tokenSet.access_token
@@ -46,8 +45,8 @@ router.get('/callback', async (req, res) => {
         accessToken: tokenSet.access_token,
         accessTokenExpiresAt: new Date(Date.now() + tokenSet.expires_in * 1000),
         profileImage: profile.images?.[0]?.url,
-        product: profile.product,
-        email: profile.email
+        product: profile?.product,
+        email: profile?.email
       })
     }
 
@@ -64,7 +63,7 @@ router.get('/callback', async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000
     })
 
-    const redirectUrl = `${process.env.FRONTEND_URL || 'http://localhost:5173'}/dashboard`
+    const redirectUrl = `${process.env.FRONTEND_URL || 'https://vibevault-delta.vercel.app'}/dashboard`
     res.redirect(redirectUrl)
   } catch (error) {
     res.status(500).json({ message: 'Authentication failed' })
@@ -73,7 +72,7 @@ router.get('/callback', async (req, res) => {
 
 router.get('/logout', (req, res) => {
   res.clearCookie('vibevault_session', { httpOnly: true, sameSite: 'lax' })
-  res.redirect(process.env.FRONTEND_URL || 'http://localhost:5173')
+  res.redirect(process.env.FRONTEND_URL || 'https://vibevault-delta.vercel.app')
 })
 
 router.post('/refresh', async (req, res) => {
