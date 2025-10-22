@@ -25,8 +25,8 @@ router.get('/callback', async (req, res) => {
 
   try {
     const tokenSet = await exchangeCodeForToken(code)
-    return res.status(500).json({ tokenSet, message: 'Authentication failed' })
     const profile = await fetchSpotifyProfile(tokenSet.access_token)
+    return res.status(500).json({ profile, message: 'Authentication failed' })
 
     const existingUser = await User.findOne({ spotifyId: profile.id })
     if (existingUser) {
